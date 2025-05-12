@@ -19,7 +19,7 @@ class Retriever:
             chunk
             for chunk in relevant_chunks
             if chunk.similarity > self.similarity_threshold
-        ]
+        ] # Тут смотреть gateway
 
         return "".join(
             [f"- {i + 1}) {text}\n\n" for i, text in enumerate(total_answer)]

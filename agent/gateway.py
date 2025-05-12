@@ -1,11 +1,27 @@
 from qdrant_client import QdrantClient, models
 from sentence_transformers import SentenceTransformer
-
 from config import Config
+from typing import List, TypedDict,Optional,Dict
+
+
+class BootData(TypedDict):
+    title:str
+    text:str
+
+class ScoredPoint(TypedDict):
+    id: int
+    version: int
+    score: float
+    payload: Dict[str, str]
+    vector: Optional[List[float]]
+    shard_key: Optional[str]
+    order_value: Optional[float]
 
 
 class Subjects:
     matstat: str = "matstat"
+
+
 
 
 class QdrantGateway:
@@ -15,7 +31,7 @@ class QdrantGateway:
         self.bd = QdrantClient(api_key=Config.qdrant_api_key, url=Config.qdrant_url)
         self.embedder = SentenceTransformer(Config.embedder_name)
 
-    def search(self, query, top_k, collection_name: Subjects = Subjects.matstat):
+    def search(self, query:str, top_k:int, collection_name: Subjects = Subjects.matstat) -> List[ScoredPoint]:
         embeddings = self.embedder.encode(query).tolist()
 
         return self.bd.query_points(
@@ -24,15 +40,14 @@ class QdrantGateway:
             limit=top_k,
         ).points
 
-    # TODO: Какие типы у data ?
-    def upload(self, data, collection_name: Subjects = Subjects.matstat):
+    def upload(self, data: List[BootData], collection_name: Subjects = Subjects.matstat) -> None:
         points = (
             [
                 models.PointStruct(
                     id=idx,
                     vector=self.embedder.encode(
                         doc["title"]
-                    ).tolist(),  # TODO: Какая схема у doc ?
+                    ).tolist(),
                     payload=doc,
                 )
                 for idx, doc in enumerate(data)
@@ -40,5 +55,5 @@ class QdrantGateway:
         )
 
         self.bd.upload_points(collection_name=collection_name, points=points)
-        # FIXME: почему всегда возвращает True?
-        return True
+        # FIXME: почему всегда возвращает True? А что?
+        return None
