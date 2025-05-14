@@ -10,7 +10,7 @@ dotenv.load_dotenv()
 @dataclass
 class Config:
     llm_api_key: Optional[str] = os.getenv("LLM_API_KEY")
-    model: str = "deepseek-chat"
+    model: str = "giga_chat"
     temperature: float = 0.1
     max_tokens: Optional[int] = 4096
 

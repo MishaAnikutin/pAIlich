@@ -1,5 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_deepseek import ChatDeepSeek
+from langchain_gigachat.chat_models import GigaChat
 
 from config import Config
 
@@ -15,11 +15,9 @@ SYSTEM_PROMPT = """
 
 class DeepSeekClient:
     def __init__(self):
-        self.llm = ChatDeepSeek(
-            model=Config.model,
-            temperature=Config.temperature,
-            max_tokens=Config.max_tokens,
-            api_key=Config.llm_api_key,
+        self.llm = GigaChat(
+        credentials=Config.llm_api_key,
+        verify_ssl_certs=False,
         )
         self.prompt_template = ChatPromptTemplate.from_messages(
             [
