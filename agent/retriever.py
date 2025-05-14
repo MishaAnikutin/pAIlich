@@ -16,9 +16,9 @@ class Retriever:
         relevant_chunks = self.gateway.search(query=query, top_k=self.top_k)
 
         total_answer = [
-            chunk
+            chunk.payload['text']
             for chunk in relevant_chunks
-            if chunk.similarity > self.similarity_threshold
+            if chunk.score > self.similarity_threshold
         ] # Тут смотреть gateway
 
         return "".join(

@@ -13,10 +13,10 @@ SYSTEM_PROMPT = """
 """
 
 
-class DeepSeekClient:
+class Gigaclass:
     def __init__(self):
         self.llm = GigaChat(
-        credentials=Config.llm_api_key,
+        credentials= Config.llm_api_key,
         verify_ssl_certs=False,
         )
         self.prompt_template = ChatPromptTemplate.from_messages(
