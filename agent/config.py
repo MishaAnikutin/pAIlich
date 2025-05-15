@@ -19,3 +19,5 @@ class Config:
     embedder_name: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
     top_k: int = 3
     similarity_threshold: float = 0.7
+
+    bot_token:str = os.getenv('TOKEN')
