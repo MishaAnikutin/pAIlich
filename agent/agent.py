@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from langchain_core.runnables import RunnablePassthrough
 
-from retriever import Retriever
-from llm_client import Gigaclass
+from .retriever import Retriever
+from .llm_client import GigaLLM
 
 
 class Agent(ABC):
@@ -11,7 +11,7 @@ class Agent(ABC):
 
 
 class RAG(Agent):
-    def __init__(self, retriever: Retriever, llm_client: Gigaclass):
+    def __init__(self, retriever: Retriever, llm_client: GigaLLM):
         self.retriever = retriever
         self.llm_client = llm_client
 

@@ -1,7 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_gigachat.chat_models import GigaChat
 
-from config import Config
+from config import AgentConfig
 
 SYSTEM_PROMPT = """
 Ты полезный ассистент по математической статистике в ВУЗе РАНХиГС в институте ЭМИТ на отделении
@@ -15,12 +15,13 @@ SYSTEM_PROMPT = """
 """
 
 
-class Gigaclass:
+class GigaLLM:
     def __init__(self):
         self.llm = GigaChat(
-        credentials= Config.llm_api_key,
-        verify_ssl_certs=False,
+            credentials=AgentConfig.llm_api_key,
+            verify_ssl_certs=False,
         )
+
         self.prompt_template = ChatPromptTemplate.from_messages(
             [
                 ("system", SYSTEM_PROMPT),

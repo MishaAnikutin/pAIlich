@@ -1,14 +1,20 @@
 import os
-import dotenv
-from typing import Optional
 from dataclasses import dataclass
+from typing import Optional
 
+from dotenv import load_dotenv
 
-dotenv.load_dotenv()
+load_dotenv()
+debug = bool(os.getenv("DEBUG"))
 
 
 @dataclass
-class Config:
+class BotConfig:
+    BOT_TOKEN: str = os.getenv("TOKEN") if not debug else os.getenv("TEST_TOKEN")
+
+
+@dataclass
+class AgentConfig:
     llm_api_key: Optional[str] = os.getenv("LLM_API_KEY")
     model: str = "giga_chat"
     temperature: float = 0.1
@@ -19,5 +25,3 @@ class Config:
     embedder_name: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
     top_k: int = 3
     similarity_threshold: float = 0.7
-
-    bot_token:str = os.getenv('TOKEN')

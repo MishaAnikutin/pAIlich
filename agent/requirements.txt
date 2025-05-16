@@ -1,4 +1,0 @@
-langchain-deepseek
-langgraph
-langchain
-qdrant_client
